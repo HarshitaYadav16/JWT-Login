@@ -6,6 +6,13 @@ const jwt = require('jsonwebtoken');
 const ensureToken = require('../middleware/ensuretoken');
 
 //POST route for new user registration
+/** 
+* @api {post} /register Registration of new user 
+* @apiName Register 
+* @apiGroup User  
+* @apiSuccess {JSON} JWT of the registered user 
+* @apiError 400 Bad Request Error All fields are required to be filled by the user Auth failed.
+*/
 router.post('/register', (req, res, next) => {
 
     if (req.body.user_name &&
@@ -48,6 +55,16 @@ router.post('/register', (req, res, next) => {
 
 
 //GET route to get all users
+/** 
+* @api {get} /getUsers Request all users information 
+* @apiName GetUser 
+* @apiGroup User  
+* @apiSuccess {String} user_name User name of the User. 
+* @apiSuccess {String} user_id User Id of the User. 
+* @apiSuccess {String} email Email of the User. 
+* @apiSuccess {String} password Hashed password of the User.
+* @apiError Sends the error Auth failed.
+*/
 router.get('/getUsers', ensureToken, (req, res) => {
     User.find((err, data) => {
         if (err) res.send(err);
@@ -57,6 +74,17 @@ router.get('/getUsers', ensureToken, (req, res) => {
 
 
 //GET route to get user according to ID
+/** 
+* @api {post} /getUserById/:id Request User information 
+* @apiName getUserById 
+* @apiGroup User 
+* @apiParam {Number} id Users unique ID. 
+* @apiSuccess {String} user_name User name of the User. 
+* @apiSuccess {String} user_id User Id of the User. 
+* @apiSuccess {String} email Email of the User. 
+* @apiSuccess {String} password Hashed password of the User.
+* @apiError Sends the error Auth failed.
+*/
 router.get('/getUserById/:id', ensureToken, (req, res) => {
     User.findOne({
         _id: req.params.id
@@ -67,6 +95,17 @@ router.get('/getUserById/:id', ensureToken, (req, res) => {
 });
 
 //PUT route to update user according to ID
+/** 
+* @api {put} /updateUser/:id Update User information 
+* @apiName UpdateUser 
+* @apiGroup User 
+* @apiParam {Number} id Users unique ID. 
+* @apiSuccess {String} updates user_name User name of the User. 
+* @apiSuccess {String} updates user_id User Id of the User. 
+* @apiSuccess {String} updates email Email of the User. 
+* @apiSuccess {String} updates password Hashed password of the User.
+* @apiError Sends the error Auth failed.
+*/
 router.put('/updateUser/:id', ensureToken, function(req, res) {
     User.findOneAndUpdate({
             _id: req.params.id
@@ -91,6 +130,17 @@ router.put('/updateUser/:id', ensureToken, function(req, res) {
 });
 
 //DELETE route to delete user according to ID
+/** 
+* @api {delete} /deleteUser/:id Update User information 
+* @apiName deleteUser 
+* @apiGroup User 
+* @apiParam {Number} id Users unique ID. 
+* @apiSuccess {String} delete user_name User name of the User. 
+* @apiSuccess {String} delete user_id User Id of the User. 
+* @apiSuccess {String} delete email Email of the User. 
+* @apiSuccess {String} delete password Hashed password of the User.
+* @apiError Sends the error Auth failed.
+*/
 router.delete('/deleteUser/:id', ensureToken, function(req, res) {
     User.findOneAndRemove({
         _id: req.params.id
