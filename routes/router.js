@@ -155,5 +155,4 @@ router.delete('/deleteUser/:id', ensureToken, function(req, res) {
 
 
 
-
 module.exports = router;
